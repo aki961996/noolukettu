@@ -333,7 +333,18 @@ address{
 
   // Add to calendar (.ics works on iPhone, Android and desktop)
   function icsDate(d){ return d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,''); }
+  var isApple = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
   document.getElementById('calBtn').addEventListener('click', function(){
+    if (!isApple){
+      var g = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+        + '&text=' + encodeURIComponent('Noolukettu & Name Reveal')
+        + '&dates=' + icsDate(START) + '/' + icsDate(END)
+        + '&details=' + encodeURIComponent('Join Akhilesh, Sreelakshmi & family to bless our little one. ' + location.href.split('#')[0])
+        + '&location=' + encodeURIComponent(VENUE)
+        + '&ctz=Asia/Kolkata';
+      window.open(g, '_blank', 'noopener');
+      return;
+    }
     var ics = [
       'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Noolukettu Invite//EN','BEGIN:VEVENT',
       'UID:noolukettu-20261106@invite',
